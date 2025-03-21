@@ -1,0 +1,32 @@
+name: Update index.html
+
+on:
+  push:
+    paths:
+      - '**.html'
+      - '!index.html'
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run index.html generator
+        run: |
+          python3 generate_index.py
+
+      - name: Commit and push index.html
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Auto-update index.html [GitHub Actions]" || echo "No changes to commit"
+          git push
