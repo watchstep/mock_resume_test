@@ -4,12 +4,19 @@ html_files = [f for f in os.listdir('.') if f.endswith('.html') and f != 'index.
 
 html_files.sort()
 
+with open('add_new.py', 'w', encoding='utf-8') as f:
+    f.write("""import os
+
+html_files = [f for f in os.listdir('.') if f.endswith('.html') and f != 'index.html']
+
+html_files.sort()
+
 with open('index.html', 'w', encoding='utf-8') as f:
     f.write("""<!DOCTYPE html>
-<html lang="en">
+<html lang=\"en\">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
     <title>Resume Files Index</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
@@ -26,7 +33,7 @@ with open('index.html', 'w', encoding='utf-8') as f:
 """)
 
     for file in html_files:
-        f.write(f'        <li><a href="{file}">{file}</a></li>\n')
+        f.write(f'        <li><a href=\"{file}\">{file}</a></li>\\n')
 
     f.write("""    </ul>
 </body>
