@@ -12,7 +12,7 @@ html_files = glob.glob(os.path.join(DATA_DIR, '*.html'))
 
 # 파일명을 날짜 기준(YYYYMMDD_HHMMSS)으로 정렬하는 함수
 def extract_datetime_from_filename(filename):
-    match = re.search(r'(\\d{8}_\\d{6})', filename)
+    match = re.search(r'(\d{8}_\d{6})', filename)
     if match:
         return datetime.strptime(match.group(1), '%Y%m%d_%H%M%S')
     else:
@@ -67,21 +67,24 @@ def generate_index_html():
 def generate_jd_index(jd_number):
     jd_files = []
 
+    jd_pattern = re.compile(r'_JD_' + jd_number + r'\.html$')
+
     for file_path in html_files:
         file_name = os.path.basename(file_path)
         file_url = f"{DATA_DIR}/{file_name}"
-        modified_time = os.path.getmtime(file_path)
 
-        if jd_number in file_name:
-            jd_files.append((file_name, file_url, modified_time))
+        if jd_pattern.search(file_name):
+            jd_files.append((file_name, file_url))
+
+    # 파일명을 날짜 기준으로 정렬
+    jd_files.sort(key=lambda x: extract_datetime_from_filename(x[0]), reverse=True)
 
     model_groups = {}
-    for file_name, file_url, modified_time in sorted(jd_files, key=lambda x: x[2], reverse=True):
+    for file_name, file_url in jd_files:
         model_name = file_name.split("_")[0]
         if model_name not in model_groups:
             model_groups[model_name] = []
-        formatted_time = datetime.fromtimestamp(modified_time).strftime('%Y-%m-%d %H:%M:%S')
-        model_groups[model_name].append(f'<li><a href="/{file_url}" target="_blank">{file_name}</a> (Last Modified: {formatted_time})</li>')
+        model_groups[model_name].append(f'<li><a href="/{file_url}" target="_blank">{file_name}</a></li>')
 
     base_jd_html = """<!DOCTYPE html>
 <html lang="en">
@@ -110,7 +113,7 @@ def generate_jd_index(jd_number):
 
     jd_html = base_jd_html.format(jd_number=jd_number, content=model_sections)
 
-    with open(f"jd_{jd_number}.html", 'w', encoding='utf-8') as f:
+    with open(f"{jd_number}.html", 'w', encoding='utf-8') as f:
         f.write(jd_html)
 
 # 실행
