@@ -16,7 +16,7 @@ for root, dirs, files in os.walk(DATA_DIR):
 html_files.sort(reverse=True)
 
 # Regex pattern for filename structure: {model}_{date_time}_JD_{jd_id}.html
-pattern = re.compile(r'^(gpt-4o|gpt-4o-mini|gemini-2\.0-flash)_(\d{8}_\d{6})_JD_(\d{6})')
+pattern = re.compile(r'^(gpt-4o|gpt-4o-mini|gemini-2\\.0-flash)_(\\d{8}_\\d{6})_JD_(\\d{6})')
 
 jd_groups = defaultdict(list)
 
