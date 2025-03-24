@@ -16,7 +16,7 @@ for root, dirs, files in os.walk(DATA_DIR):
 html_files.sort(reverse=True)
 
 # Regex pattern for filename structure: {model}_{date_time}_JD_{jd_id}.html
-pattern = re.compile(r'^(gpt-4o|gpt-4o-mini|gemini-2\\.0-flash)_(\\d{8}_\\d{6})_JD_(\\d{6})')
+pattern = re.compile(r'^(gpt-4o|gpt-4o-mini|gemini-2\.0-flash)_(\d{8}_\d{6})_JD_(\d{6})')
 
 jd_groups = defaultdict(list)
 
@@ -39,7 +39,7 @@ with open('index.html', 'w', encoding='utf-8') as f:
 <head>
     <meta charset=\"UTF-8\">
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-    <title>Mock Resume Index</title>
+    <title>Mock Resumes</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
         h1, h2, h3 { margin-top: 30px; }
@@ -54,10 +54,10 @@ with open('index.html', 'w', encoding='utf-8') as f:
     <ul>
 """)
 
-    # Add all resume links sorted by date
-    for jd_id, files in jd_groups.items():
-        for entry in sorted(files, key=lambda x: x['date'], reverse=True):
-            f.write(f'<li><a href=\"{DATA_DIR}/{entry["file"]}\">{entry["file"]}</a></li>\n')
+    # Add all resume links (latest first)
+    all_files = [entry for jd_entries in jd_groups.values() for entry in jd_entries]
+    for entry in sorted(all_files, key=lambda x: x['date'], reverse=True):
+        f.write(f'<li><a href=\"/{DATA_DIR}/{entry["file"]}\">{entry["file"]}</a></li>\n')
 
     f.write("""
     </ul>
@@ -66,8 +66,8 @@ with open('index.html', 'w', encoding='utf-8') as f:
 """)
 
     # Add JD links
-    for jd_id in sorted(jd_groups.keys()):
-        f.write(f'<li><a href=\"{jd_id}.html\">JD {jd_id}</a></li>\n')
+    for jd_id in sorted(jd_groups.keys(), reverse=True):
+        f.write(f'<li><a href=\"/{jd_id}.html\">{jd_id}</a></li>\n')
 
     f.write("""
     </ul>
@@ -99,7 +99,6 @@ for jd_id, entries in jd_groups.items():
     <h2>Model</h2>
 """)
 
-        # Group by model
         model_group = defaultdict(list)
         for entry in entries:
             model_group[entry['model']].append(entry)
@@ -107,14 +106,13 @@ for jd_id, entries in jd_groups.items():
         for model_type, model_entries in model_group.items():
             f.write(f'<h3>{model_type}</h3>\n<ul>\n')
             for entry in sorted(model_entries, key=lambda x: x['date'], reverse=True):
-                f.write(f'    <li><a href=\"{DATA_DIR}/{entry["file"]}\">{entry["file"]}</a></li>\n')
+                f.write(f'    <li><a href=\"/{DATA_DIR}/{entry["file"]}\">{entry["file"]}</a></li>\n')
             f.write('</ul>\n')
 
         f.write("""
     <h2>Date</h2>
 """)
 
-        # Group by date
         date_group = defaultdict(list)
         for entry in entries:
             date_group[entry['date']].append(entry)
@@ -122,7 +120,7 @@ for jd_id, entries in jd_groups.items():
         for date_str, date_entries in sorted(date_group.items(), key=lambda x: x[0], reverse=True):
             f.write(f'<h3>{date_str}</h3>\n<ul>\n')
             for entry in date_entries:
-                f.write(f'    <li><a href=\"{DATA_DIR}/{entry["file"]}\">{entry["file"]}</a></li>\n')
+                f.write(f'    <li><a href=\"/{DATA_DIR}/{entry["file"]}\">{entry["file"]}</a></li>\n')
             f.write('</ul>\n')
 
         f.write("""
