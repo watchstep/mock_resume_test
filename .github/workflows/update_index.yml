@@ -26,10 +26,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull origin main --rebase || echo "No changes to pull"
-          git add index.html
-          git commit -m "Auto-update index.html [GitHub Actions]" || echo "No changes to commit"
-          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/watchstep/mock_resume_test.git 
-          git push origin main
-
-     
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update index.html [GitHub Actions]"
+            git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/watchstep/mock_resume_test.git
+            git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
