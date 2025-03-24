@@ -3,8 +3,6 @@ name: Update index.html
 on:
   push:
     paths:
-      - 'data/**/*.html'
-      - '!index.html'
 
 jobs:
   update-index:
