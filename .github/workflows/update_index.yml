@@ -3,7 +3,7 @@ name: Update index.html
 on:
   push:
     paths:
-      - '**.html'
+      - 'data/**/*.html'
       - '!index.html'
 
 jobs:
@@ -19,6 +19,10 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install dependencies
+        run: |
+          pip install requests
+          
       - name: Run index.html generator
         run: |
           python3 generate_index.py
