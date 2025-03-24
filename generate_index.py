@@ -1,15 +1,10 @@
 import os
-import requests
 from collections import defaultdict
 import re
 
-# GitHub repository information
-GITHUB_API_URL = "https://api.github.com/repos/watchstep/mock_resume_test/contents/data"
-
-response = requests.get(GITHUB_API_URL)
-files = response.json()
-
-html_files = [file["name"] for file in files if file["name"].endswith(".html") and file["name"] != "index.html"]
+# Search local 'data' directory for HTML files
+DATA_DIR = 'data'
+html_files = [f for f in os.listdir(DATA_DIR) if f.endswith(".html") and f != "index.html"]
 html_files.sort()
 
 # Group files by model type and date
@@ -51,7 +46,7 @@ with open('index.html', 'w', encoding='utf-8') as f:
     for model_type, files in model_groups.items():
         f.write(f'<h3>{model_type}</h3>\n<ul>\n')
         for file in files:
-            f.write(f'    <li><a href="data/{file}">{file}</a></li>\n')
+            f.write(f'    <li><a href="{DATA_DIR}/{file}">{file}</a></li>\n')
         f.write('</ul>\n')
 
     f.write("""
@@ -60,12 +55,10 @@ with open('index.html', 'w', encoding='utf-8') as f:
     for date_str, files in date_groups.items():
         f.write(f'<h3>{date_str}</h3>\n<ul>\n')
         for file in files:
-            f.write(f'    <li><a href="data/{file}">{file}</a></li>\n')
+            f.write(f'    <li><a href="{DATA_DIR}/{file}">{file}</a></li>\n')
         f.write('</ul>\n')
 
     f.write("""
 </body>
 </html>
 """)
-
-print("✅ index.html updated with model and date categorization, using files inside 'data' folder.")
