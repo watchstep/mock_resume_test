@@ -38,13 +38,9 @@ base_html = """<!DOCTYPE html>
     </style>
 </head>
 <body>
-    <h1>Mock Resumes</h1>
+    <h1>Mock Resumes (Latest First)</h1>
     <ul>
-        <!-- Links to all resume files sorted by date will be inserted here dynamically -->
-    </ul>
-    <h2>JD</h2>
-    <ul>
-        <!-- JD-specific links (e.g., JD_XXXXXX.html) will be dynamically generated here -->
+        <!-- ALL FILES INSERT -->
     </ul>
 </body>
 </html>"""
