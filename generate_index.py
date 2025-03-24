@@ -3,24 +3,25 @@ from collections import defaultdict
 import re
 
 # Search local 'data' directory for HTML files
-DATA_DIR = 'data'
+data_dir = 'data'
 html_files = []
-for root, dirs, files in os.walk(DATA_DIR):
+for root, dirs, files in os.walk(data_dir):
     for file in files:
         if file.endswith('.html') and file != 'index.html':
-            relative_path = os.path.relpath(os.path.join(root, file), DATA_DIR)
+            relative_path = os.path.relpath(os.path.join(root, file), data_dir)
             html_files.append(relative_path)
-            
+
 html_files.sort()
 
 # Group files by model type and date
 model_groups = defaultdict(list)
 date_groups = defaultdict(list)
 
-model_pattern = re.compile(r'^(gpt-4o|gpt-4o-mini|gemini-2\.0-flash)_(\d{8})')
+# Updated regex to capture date in YYYYMMDD_HHMMSS format
+model_pattern = re.compile(r'^(gpt-4o|gpt-4o-mini|gemini-2\\.0-flash)_(\\d{8}_\\d{6})')
 
 for file in html_files:
-    match = model_pattern.match(file)
+    match = model_pattern.match(os.path.basename(file))
     if match:
         model_type = match.group(1)
         date_str = match.group(2)
@@ -33,7 +34,7 @@ with open('index.html', 'w', encoding='utf-8') as f:
 <head>
     <meta charset=\"UTF-8\">
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-    <title>Resume Files Index</title>
+    <title>Resume Files</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
         h1 { border-bottom: 2px solid #333; }
@@ -52,16 +53,16 @@ with open('index.html', 'w', encoding='utf-8') as f:
     for model_type, files in model_groups.items():
         f.write(f'<h3>{model_type}</h3>\n<ul>\n')
         for file in files:
-            f.write(f'    <li><a href="{DATA_DIR}/{file}">{file}</a></li>\n')
+            f.write(f'    <li><a href="{data_dir}/{file}">{file}</a></li>\n')
         f.write('</ul>\n')
 
     f.write("""
     <h2>Date</h2>
 """)
-    for date_str, files in date_groups.items():
+    for date_str, files in sorted(date_groups.items(), reverse=True):
         f.write(f'<h3>{date_str}</h3>\n<ul>\n')
         for file in files:
-            f.write(f'    <li><a href="{DATA_DIR}/{file}">{file}</a></li>\n')
+            f.write(f'    <li><a href="{data_dir}/{file}">{file}</a></li>\n')
         f.write('</ul>\n')
 
     f.write("""
