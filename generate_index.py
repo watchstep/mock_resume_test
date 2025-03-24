@@ -1,15 +1,30 @@
 import os
+import requests
+from collections import defaultdict
+import re
 
-html_files = [f for f in os.listdir('.') if f.endswith('.html') and f != 'index.html']
+# GitHub repository information
+GITHUB_API_URL = "https://api.github.com/repos/watchstep/mock_resume_test/contents/data"
 
+response = requests.get(GITHUB_API_URL)
+files = response.json()
+
+html_files = [file["name"] for file in files if file["name"].endswith(".html") and file["name"] != "index.html"]
 html_files.sort()
 
-with open('add_new.py', 'w', encoding='utf-8') as f:
-    f.write("""import os
+# Group files by model type and date
+model_groups = defaultdict(list)
+date_groups = defaultdict(list)
 
-html_files = [f for f in os.listdir('.') if f.endswith('.html') and f != 'index.html']
+model_pattern = re.compile(r'^(gpt-4o|gpt-4o-mini|gemini-2\\.0-flash)_(\\d{8})')
 
-html_files.sort()
+for file in html_files:
+    match = model_pattern.match(file)
+    if match:
+        model_type = match.group(1)
+        date_str = match.group(2)
+        model_groups[model_type].append(file)
+        date_groups[date_str].append(file)
 
 with open('index.html', 'w', encoding='utf-8') as f:
     f.write("""<!DOCTYPE html>
@@ -21,6 +36,7 @@ with open('index.html', 'w', encoding='utf-8') as f:
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
         h1 { border-bottom: 2px solid #333; }
+        h2 { margin-top: 40px; }
         ul { list-style-type: none; padding: 0; }
         li { margin: 10px 0; }
         a { text-decoration: none; color: #007bff; }
@@ -28,14 +44,28 @@ with open('index.html', 'w', encoding='utf-8') as f:
     </style>
 </head>
 <body>
-    <h1>Mock Resumes</h1>
-    <ul>
+    <h1>Mock Resumes Index</h1>
+
+    <h2>By Model Type</h2>
 """)
+    for model_type, files in model_groups.items():
+        f.write(f'<h3>{model_type}</h3>\n<ul>\n')
+        for file in files:
+            f.write(f'    <li><a href="data/{file}">{file}</a></li>\n')
+        f.write('</ul>\n')
 
-    for file in html_files:
-        f.write(f'        <li><a href=\"{file}\">{file}</a></li>\\n')
+    f.write("""
+    <h2>By Date</h2>
+""")
+    for date_str, files in date_groups.items():
+        f.write(f'<h3>{date_str}</h3>\n<ul>\n')
+        for file in files:
+            f.write(f'    <li><a href="data/{file}">{file}</a></li>\n')
+        f.write('</ul>\n')
 
-    f.write("""    </ul>
+    f.write("""
 </body>
 </html>
 """)
+
+print("✅ index.html updated with model and date categorization, using files inside 'data' folder.")
