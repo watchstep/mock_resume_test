@@ -4,14 +4,20 @@ import re
 
 # Search local 'data' directory for HTML files
 DATA_DIR = 'data'
-html_files = [f for f in os.listdir(DATA_DIR) if f.endswith(".html") and f != "index.html"]
+html_files = []
+for root, dirs, files in os.walk(DATA_DIR):
+    for file in files:
+        if file.endswith('.html') and file != 'index.html':
+            relative_path = os.path.relpath(os.path.join(root, file), DATA_DIR)
+            html_files.append(relative_path)
+            
 html_files.sort()
 
 # Group files by model type and date
 model_groups = defaultdict(list)
 date_groups = defaultdict(list)
 
-model_pattern = re.compile(r'^(gpt-4o|gpt-4o-mini|gemini-2\\.0-flash)_(\\d{8})')
+model_pattern = re.compile(r'^(gpt-4o|gpt-4o-mini|gemini-2\.0-flash)_(\d{8})')
 
 for file in html_files:
     match = model_pattern.match(file)
