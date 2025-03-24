@@ -39,9 +39,9 @@ with open('index.html', 'w', encoding='utf-8') as f:
     </style>
 </head>
 <body>
-    <h1>Mock Resumes Index</h1>
+    <h1>Mock Resumes</h1>
 
-    <h2>By Model Type</h2>
+    <h2>Model</h2>
 """)
     for model_type, files in model_groups.items():
         f.write(f'<h3>{model_type}</h3>\n<ul>\n')
@@ -50,7 +50,7 @@ with open('index.html', 'w', encoding='utf-8') as f:
         f.write('</ul>\n')
 
     f.write("""
-    <h2>By Date</h2>
+    <h2>Date</h2>
 """)
     for date_str, files in date_groups.items():
         f.write(f'<h3>{date_str}</h3>\n<ul>\n')
