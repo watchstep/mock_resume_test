@@ -37,10 +37,3 @@ jobs:
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/watchstep/mock_resume_test.git main
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v3
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-          branch: main
-          folder: . 
