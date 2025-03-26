@@ -19,7 +19,7 @@ def render_resume_html(output_json_path, template_path):
         with open(html_output_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
             
-        print(f"HTML has been successfully generated! : {output_html_path}")
+        print(f"HTML has been successfully generated!")
 
 if __name__ == "__main__":
     data_dir = Path("data")
