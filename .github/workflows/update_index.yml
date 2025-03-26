@@ -17,6 +17,9 @@ jobs:
         with:
           python-version: '3.x'
           
+      - name: Render JSON to HTML
+        run: python3 render_json_to_html.py
+        
       - name: Run index.html generator
         run: |
           python3 generate_index.py
