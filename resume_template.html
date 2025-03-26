@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        h1, h2, h3 { border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        .section { margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; }
+        table, th, td { border: 1px solid #ccc; }
+        th, td { padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Resume</h1>
+
+    <div class="section">
+        <h2>Basic Information</h2>
+        <p><strong>Career Summary:</strong> {{ resume.basic_info.career_summary }}</p>
+        <p><strong>Current Status:</strong> {{ resume.basic_info.current_job_status }}</p>
+        <p><strong>Total Career Years:</strong> {{ resume.basic_info.total_career_years }}</p>
+        <p><strong>Location:</strong> {{ resume.basic_info.location }}</p>
+        <p><strong>Hope Salary:</strong> {{ resume.basic_info.hope_salary }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Skills</h2>
+        <table>
+            <tr><th>Skill Name</th><th>Level</th></tr>
+            {% for skill in resume.skills %}
+            <tr><td>{{ skill.name }}</td><td>{{ skill.level }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Careers</h2>
+        {% for career in resume.careers %}
+        <h3>{{ career.job_role }} ({{ career.department }}, {{ career.industry }})</h3>
+        <p><strong>Positions:</strong> {{ career.positions | join(", ") }}</p>
+        <p><strong>Period:</strong> {{ career.start_year_month }} ~ {% if career.end_year_month %}{{ career.end_year_month }}{% else %}Present{% endif %}</p>
+        <p><strong>Description:</strong> {{ career.description }}</p>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h2>Experiences</h2>
+        {% for exp in resume.experiences %}
+        <p><strong>{{ exp.experience_type }}</strong> at {{ exp.organization }} ({{ exp.start_year_month }} ~ {% if exp.end_year_month %}{{ exp.end_year_month }}{% else %}Present{% endif %})</p>
+        <p>{{ exp.description }}</p>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h2>Education</h2>
+        {% for edu in resume.education %}
+        <p><strong>{{ edu.degree }} in {{ edu.major }}</strong> ({{ edu.school_area }})<br>
+        GPA: {{ edu.gpa }} | Period: {{ edu.start_year_month }} ~ {% if edu.end_year_month %}{{ edu.end_year_month }}{% else %}Present{% endif %}</p>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h2>Certifications</h2>
+        <ul>
+            {% for cert in resume.certifications %}
+            <li>{{ cert.name }} - {{ cert.issuer }} (Issued: {{ cert.issue_year_month }})</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Languages</h2>
+        <table>
+            <tr><th>Language</th><th>Level</th><th>Test</th><th>Score</th><th>Date</th></tr>
+            {% for lang in resume.languages %}
+            <tr><td>{{ lang.language }}</td><td>{{ lang.level }}</td><td>{{ lang.test_name }}</td><td>{{ lang.score }}</td><td>{{ lang.test_year_month }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Awards</h2>
+        {% for award in resume.awards %}
+        <p><strong>{{ award.title }}</strong> ({{ award.award_year_month }}) - {{ award.organization }}<br>
+        {{ award.description }}</p>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h2>Desired Jobs & Industries</h2>
+        <p><strong>Jobs:</strong> {{ resume.hope_job_industry.hope_jobs | join(", ") }}</p>
+        <p><strong>Industries:</strong> {{ resume.hope_job_industry.hope_industries | join(", ") }}</p>
+    </div>
+</body>
+</html>
