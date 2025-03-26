@@ -1,0 +1,160 @@
+{
+    "jd_id": 460187,
+    "jd_query": "[공고 제목]\niOS 개발자(시니어) 채용\n\n[기업 정보]\n- 기업명: 코인원\n- 기업 규모: 중견기업\n- 도메인: 솔루션/SI/CRM/ERP\n- 근무지:  서울\n\n[모집 부문]\n- 채용 직무: iOS 개발자\n- 직무 분야 : 개발\n\n[자격 요건]\n- 관련 경력 7년 ~ 0.0년\n",
+    "prompt": [
+        {
+            "role": "system",
+            "content": "당신은 업계 최고의 이력서 전문 컨설턴트입니다.채용 담당자가 이상적으로 생각하는 인재 후보상을 깊이 이해하고 있으며, 풍부한 업계 지식과 작성 노하우를 보유하고 있습니다."
+        },
+        {
+            "role": "user",
+            "content": "아래는 주어진 채용 공고입니다.\n\n[채용 공고]\n[공고 제목]\niOS 개발자(시니어) 채용\n\n[기업 정보]\n- 기업명: 코인원\n- 기업 규모: 중견기업\n- 도메인: 솔루션/SI/CRM/ERP\n- 근무지:  서울\n\n[모집 부문]\n- 채용 직무: iOS 개발자\n- 직무 분야 : 개발\n\n[자격 요건]\n- 관련 경력 7년 ~ 0.0년\n\n\n해당 공고를 철저히 분석한 후, 5-WHYS 프레임워크를 활용해 \"왜 해당 인재가 반드시 1순위로 채용해야 하는 인재인지\"에 대한 이유를 다음 절차로 도출하세요:\n\n1. **Why 1**: 이 직무에 반드시 필요한 핵심 요구사항은 무엇인가?\n2. **Why 2**: 왜 그 요구사항이 비즈니스 또는 조직의 성공에 필수적인가?\n3. **Why 3**: 그 요구사항을 충족한 인재는 어떤 결과를 가져올 수 있는가?\n4. **Why 4**: 왜 그 결과가 회사 또는 팀의 차별화 요소가 되는가?\n5. **Why 5**: 최종적으로 왜 다른 후보자보다 이 가상 인재가 더 적합한가?\n\n이 분석 결과를 바탕으로, 공고에 포함되지 않았더라도 업계 표준, 최신 트렌드, 채용 담당자가 선호할 만한 역량과 사고방식까지 포함하여 가장 적합한 **가상의 이상적인 이력서**를 아래 **JSON 형식으로** 출력해 주세요.\n\n아래 가이드를 참고하여 이력서를 작성하세요."
+        },
+        {
+            "role": "user",
+            "content": "이력서는 다음 **9개의 섹션**을 모두 포함해야하며, 각 섹션은 아래 형식과 요구 사항을 준수해야 합니다.\n\n[작성 가이드]\n1. 이름, 성별, 나이, 자세한 거주 주소 등 민감한 개인 정보는 포함하지 말 것\n2. 모든 연월은 'YYYY-MM' 형식으로 표기\n3. 학점(gpa)은 소수점 2자리까지 표기\n4. 공고에 명시된 핵심 키워드는 변형 없이 원문 그대로 사용 (예: 'iOS 개발자', '핀테크')\n5. mem_id, reg_year 항목은 반드시 null로 설정\n6. 직무 대분류(job_family) 항목은 반드시 제공된 14개 카테고리 중 제일 적합한 하나를 선택\n7. 실무 성과가 잘 드러나도록 구체적으로 작성\n8. 과장된 표현은 지양하고, 구체적이며 사실적인 어조를 유지\n9. 연차, 졸업 연도, 직무 내용 간 모순이 없도록 유의\n10. 가상 이력서지만 현실적이고 채용 가능성이 높은 인재 프로필 작성\n11. 공고에서 드러나지 않는 최신 트렌드, 관련 경험, 도메인 전문성 포함\n\n1. 기본 정보 (basic_info)\n   - mem_id (string, optional): 회원 ID (없으면 null)\n   - reg_year (int, optional): 이력서 등록 연도 (형식: YYYY, 없으면 null)\n   - total_career_years (int): 총 경력 연차\n   - career_summary (str): 경력 요약 문장\n   - current_job_status (enum): \"재직 중\", \"구직 중 (경력)\", \"구직 중 (신입)\"\n   - hope_salary (str or null): 희망 연봉 (예: \"6,000만 원\", \"협의 가능\")\n   - location (str): 시/군/구 (예: \"서울특별시 강남구\")\n\n2. 기술 역량 (skills)\n   - name (str): 하드 스킬, 소프트 스킬, 또는 도메인 특화 지식\n   - level  (enum): \"초급\", \"중급\", \"고급\",\"해당 없음\" (사용 기술 또는 언어 수준)\n\n3. 경력 (careers)\n   - industry (str): 산업군 (예: \"핀테크\", \"게임\", \"IT\" 등)\n   - department (str): 부서명\n   - job_family (str) : 직무 대분류 (아래 14개 카테고리 중 하나)\n   - job_role (str): 세부 직무명\n   - positions (arrary of str): 직위 리스트 (예: [\"사원\", \"대리\"])\n   - description (str): 담당 업무 및 성과 내용\n   - period_year (int or null): 근무 기간(년)\n   - start_year_month (str): 시작 연월 ('YYYY-MM' 형식)\n   - end_year_month (str or null): 종료 연월 ('YYYY-MM' 형식, 재직 중이면 null)\n   - is_current (bool): 현재 재직 여부\n   - is_job_family_changed (bool or null): 직무 대분류 변동 여부\n   \n   직무 대분류(job_family) 카테고리 목록:\n   - 영업/고객상담\n   - 경영/사무\n   - 마케팅/광고/홍보\n   - 생산/제조\n   - 연구개발/설계\n   - IT/인터넷\n   - 서비스\n   - 무역/유통\n   - 의료\n   - 건설\n   - 교육\n   - 디자인\n   - 전문/특수직\n   - 미디어\n   \n4. 경험 (experiences)\n   - experience_type (enum): \"교내 활동\", \"인턴\", \"동아리\", \"자원 봉사\", \"알바\", \"사회 활동\", \"해외 연수\", \"교육 활동\"\n   - description (str): 주요 역할, 성과, 배운 점 등\n   - organization (str): 활동 기관/기업/지역\n   - period_month: (int or null): 활동 기간(개월)\n   - start_year_month (str): 시작 연월 ('YYYY-MM' 형식)\n   - end_year_month (str or null): 종료 연월 ('YYYY-MM' 형식, 진행 중이면 null)\n\n5. 학력 (education)\n   - degree (str): 학위 (예: 고등학교 졸업, 학사, 석사, 박사 등)\n   - school_type (str): 학교 유형 (예: 4년제 대학교, 전문대, 대학원 등)\n   - school_area (str): 학교 소재지 (예: 서울특별시, 경기도 등)\n   - major (str): 전공\n   - double_major_minor (str or null): 복수 전공/부전공\n   - gpa (float or null): 학점 (4.5점 만점 기준, 소수점 2자리)\n   - period_year (int or null): 재학 기간(년)\n   - start_year_month (str): 입학 연월 ('YYYY-MM')\n   - end_year_month (str or null): 졸업 연월 ('YYYY-MM')\n   - graduate_status (enum): \"졸업\", \"졸업 예정\", \"수료\", \"휴학\", \"중퇴\" \n\n6. 자격증 (certifications)\n   - name (str): 자격증 이름 (예: \"정보처리기사\")\n   - issuer (str): 발행 기관\n   - issue_year_month (str): 취득 연월 ('YYYY-MM')\n   - expiration_year_month (str or null): 만료 연월 ('YYYY-MM', 없으면 null)\n\n7. 어학 (languages)\n   - language (str): (예: \"영어\")\n   - level (str): (예: \"Lv.1\", \"Lv.2\", \"1급\", \"2급\", \"IH\", \"IM2\" 등)\n   - test_name (str or null): 시험 이름 예) \"TOEIC\"\n   - score (float or null): 시험 점수\n   - test_year_month (str or null): 시험 연월 ('YYYY-MM')\n\n8. 수상 경력 (awards)\n   - title (str): 수상명\n   - award_year_month (str): 수상 연월 ('YYYY-MM')\n   - organization (str): 수여 기관\n   - description (str or null): 주요 성과 및 의의\n\n9. 희망 직무 및 산업군 (hope_job_industry)\n   - hope_jobs (array of str): 희망 직무 (예: [\"iOS 개발자\", \"데이터 분석\"])\n   - hope_industries (array of str): 희망 산업군 (예: [\"핀테크\", \"블록체인\"])\n\n[출력 예시 (JSON)]\n아래 JSON 형식을 엄격히 준수하고, JSON 바깥에는 어떤 설명이나 추가 텍스트도 절대 넣지 마세요. 코드 블록(```)도 사용하지 마세요.\n{\n  \"basic_info\": {\n    \"mem_id\": null,\n    \"reg_year\": null,\n    \"total_career_years\": 0,\n    \"career_summary\": \"\",\n    \"current_job_status\": \"\",\n    \"hope_salary\": null,\n    \"location\": \"\"\n  },\n  \"skills\": [\n   {\n      \"name\": \"\",\n      \"level\": \"\"\n   }\n  ],\n  \"careers\": [\n   {\n      \"industry\": \"\",\n      \"department\": \"\",\n      \"job_family\": \"\",\n      \"job_role\": \"\",\n      \"positions\": [\"\"],\n      \"description\": \"\",\n      \"period_year\": null,\n      \"start_year_month\": \"\",\n      \"end_year_month\": null,\n      \"salary\": null,\n      \"is_current\": false,\n      \"is_job_family_changed\": null\n   }\n  ],\n  \"experiences\": [\n   {\n      \"experience_type\": \"\",\n      \"description\": \"\",\n      \"organization\": \"\",\n      \"period_month\": null,\n      \"start_year_month\": \"\",\n      \"end_year_month\": null\n   }\n  ],\n  \"education\": [\n   {\n      \"degree\": \"\",\n      \"school_type\": \"\",\n      \"school_area\": \"\",\n      \"major\": \"\",\n      \"double_major_minor\": null,\n      \"gpa\": null,\n      \"period_year\": null,\n      \"start_year_month\": \"\",\n      \"end_year_month\": null,\n      \"graduate_status\": \"\"\n   }\n  ],\n  \"certifications\": [\n   {\n      \"name\": \"\",\n      \"issuer\": \"\",\n      \"issue_year_month\": \"\",\n      \"expiration_year_month\": null\n   }\n  ],\n  \"languages\": [\n   {\n      \"language\": \"\",\n      \"level\": \"\",\n      \"test_name\": null,\n      \"score\": null,\n      \"test_year_month\": null\n   }\n  ],\n  \"awards\": [\n   {\n      \"title\": \"\",\n      \"award_year_month\": \"\",\n      \"organization\": \"\",\n      \"description\": null\n   }\n  ],\n  \"hope_job_industry\": {\n    \"hope_jobs\": [\"\"],\n    \"hope_industries\": [\"\"]\n   }\n}"
+        }
+    ],
+    "output": {
+        "basic_info": {
+            "mem_id": null,
+            "reg_year": null,
+            "total_career_years": 8,
+            "career_summary": "8년 경력의 iOS 개발자로, 핀테크 및 솔루션 분야에서 다양한 프로젝트를 성공적으로 이끌었습니다. 최신 iOS 기술 트렌드에 대한 깊은 이해와 사용자 중심의 앱 개발 경험을 보유하고 있습니다.",
+            "current_job_status": "재직 중",
+            "hope_salary": "협의 가능",
+            "location": "서울특별시 강남구"
+        },
+        "skills": [
+            {
+                "name": "Swift",
+                "level": "고급"
+            },
+            {
+                "name": "Objective-C",
+                "level": "중급"
+            },
+            {
+                "name": "iOS SDK",
+                "level": "고급"
+            },
+            {
+                "name": "UI/UX 디자인",
+                "level": "중급"
+            },
+            {
+                "name": "핀테크",
+                "level": "고급"
+            },
+            {
+                "name": "Agile/Scrum",
+                "level": "고급"
+            }
+        ],
+        "careers": [
+            {
+                "industry": "핀테크",
+                "department": "모바일 개발팀",
+                "job_family": "IT/인터넷",
+                "job_role": "iOS 개발자",
+                "positions": [
+                    "대리",
+                    "과장"
+                ],
+                "description": "핀테크 앱 개발 및 유지보수를 담당하며, 사용자 경험을 개선하기 위한 UI/UX 최적화 작업을 수행했습니다. 주요 프로젝트로는 사용자 수 50만 명 이상을 달성한 모바일 뱅킹 앱 개발이 있습니다.",
+                "period_year": 5,
+                "start_year_month": "2018-01",
+                "end_year_month": null,
+                "is_current": true,
+                "is_job_family_changed": false
+            },
+            {
+                "industry": "솔루션",
+                "department": "모바일 솔루션팀",
+                "job_family": "IT/인터넷",
+                "job_role": "iOS 개발자",
+                "positions": [
+                    "사원",
+                    "대리"
+                ],
+                "description": "다양한 산업군의 고객을 위한 맞춤형 iOS 솔루션을 개발했습니다. 특히, CRM 시스템과 연동된 모바일 앱 개발 프로젝트를 성공적으로 완료했습니다.",
+                "period_year": 3,
+                "start_year_month": "2015-01",
+                "end_year_month": "2017-12",
+                "is_current": false,
+                "is_job_family_changed": false
+            }
+        ],
+        "experiences": [
+            {
+                "experience_type": "인턴",
+                "description": "iOS 개발팀에서 인턴으로 근무하며, 앱 테스트 및 버그 수정 작업을 지원했습니다.",
+                "organization": "모바일 솔루션 기업",
+                "period_month": 6,
+                "start_year_month": "2014-06",
+                "end_year_month": "2014-12"
+            }
+        ],
+        "education": [
+            {
+                "degree": "학사",
+                "school_type": "4년제 대학교",
+                "school_area": "서울특별시",
+                "major": "컴퓨터공학",
+                "double_major_minor": null,
+                "gpa": 3.85,
+                "period_year": 4,
+                "start_year_month": "2010-03",
+                "end_year_month": "2014-02",
+                "graduate_status": "졸업"
+            }
+        ],
+        "certifications": [
+            {
+                "name": "정보처리기사",
+                "issuer": "한국산업인력공단",
+                "issue_year_month": "2015-05",
+                "expiration_year_month": null
+            }
+        ],
+        "languages": [
+            {
+                "language": "영어",
+                "level": "IM2",
+                "test_name": "OPIc",
+                "score": null,
+                "test_year_month": "2019-08"
+            }
+        ],
+        "awards": [
+            {
+                "title": "우수 개발자상",
+                "award_year_month": "2020-12",
+                "organization": "코인원",
+                "description": "모바일 뱅킹 앱 개발 프로젝트에서 혁신적인 UI/UX 개선을 통해 사용자 만족도를 크게 향상시킨 공로를 인정받아 수상."
+            }
+        ],
+        "hope_job_industry": {
+            "hope_jobs": [
+                "iOS 개발자"
+            ],
+            "hope_industries": [
+                "핀테크",
+                "블록체인"
+            ]
+        }
+    },
+    "generation_time": 10.76,
+    "price_info": {
+        "dollar": {
+            "input": 0.006112,
+            "output": 0.0102,
+            "total": 0.016313
+        },
+        "won": {
+            "input": 8.8,
+            "output": 14.69,
+            "total": 23.49
+        }
+    }
+}
