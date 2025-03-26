@@ -118,6 +118,7 @@ def generate_jd_index(jd_number):
     jd_html = base_jd_html.format(jd_number=jd_number, content=model_sections)
 
     output_dir = os.path.join("jd", jd_number)
+    os.makedirs(output_dir, exist_ok=True)
 
     with open(os.path.join(output_dir, "index.html"), 'w', encoding='utf-8') as f:
         f.write(jd_html)
@@ -125,4 +126,15 @@ def generate_jd_index(jd_number):
 # 실행
 if __name__ == "__main__":
     generate_index_html()
+    jd_numbers = set()
+    
+    for file in html_files:
+        match = re.search(r'_(\d{6})\\.html$', os.path.basename(file))
+        if match:
+            jd_numbers.add(match.group(1))
+    
+    for jd in jd_numbers:
+        generate_jd_index(jd)
+        print(f"JD page for {jd} has been generated!")
+        
     print(f"Index file '{OUTPUT_FILE}' has been successfully generated!")
