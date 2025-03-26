@@ -118,10 +118,248 @@
         </h2>
         <div id="jd_prompt" style="display: none; margin-top: 20px;">
             <h3>JD Query</h3>
-            <pre></pre>
+            <pre>[공고 제목]
+iOS 개발자(시니어) 채용
+
+[기업 정보]
+- 기업명: 코인원
+- 기업 규모: 중견기업
+- 도메인: 솔루션/SI/CRM/ERP
+- 근무지:  서울
+
+[모집 부문]
+- 채용 직무: iOS 개발자
+- 직무 분야 : 개발
+
+[자격 요건]
+- 관련 경력 7년 ~ 0.0년
+</pre>
 
             <h3>Prompt History</h3>
             <ul>
+                
+                    <li><strong>system</strong>: 당신은 업계 최고의 이력서 전문 컨설턴트입니다.채용 담당자가 이상적으로 생각하는 인재 후보상을 깊이 이해하고 있으며, 풍부한 업계 지식과 작성 노하우를 보유하고 있습니다.</li>
+                
+                    <li><strong>user</strong>: 아래는 주어진 채용 공고입니다.
+
+[채용 공고]
+[공고 제목]
+iOS 개발자(시니어) 채용
+
+[기업 정보]
+- 기업명: 코인원
+- 기업 규모: 중견기업
+- 도메인: 솔루션/SI/CRM/ERP
+- 근무지:  서울
+
+[모집 부문]
+- 채용 직무: iOS 개발자
+- 직무 분야 : 개발
+
+[자격 요건]
+- 관련 경력 7년 ~ 0.0년
+
+
+해당 공고를 철저히 분석한 후, 5-WHYS 프레임워크를 활용해 "왜 해당 인재가 반드시 1순위로 채용해야 하는 인재인지"에 대한 이유를 다음 절차로 도출하세요:
+
+1. **Why 1**: 이 직무에 반드시 필요한 핵심 요구사항은 무엇인가?
+2. **Why 2**: 왜 그 요구사항이 비즈니스 또는 조직의 성공에 필수적인가?
+3. **Why 3**: 그 요구사항을 충족한 인재는 어떤 결과를 가져올 수 있는가?
+4. **Why 4**: 왜 그 결과가 회사 또는 팀의 차별화 요소가 되는가?
+5. **Why 5**: 최종적으로 왜 다른 후보자보다 이 가상 인재가 더 적합한가?
+
+이 분석 결과를 바탕으로, 공고에 포함되지 않았더라도 업계 표준, 최신 트렌드, 채용 담당자가 선호할 만한 역량과 사고방식까지 포함하여 가장 적합한 **가상의 이상적인 이력서**를 아래 **JSON 형식으로** 출력해 주세요.
+
+아래 가이드를 참고하여 이력서를 작성하세요.</li>
+                
+                    <li><strong>user</strong>: 이력서는 다음 **9개의 섹션**을 모두 포함해야하며, 각 섹션은 아래 형식과 요구 사항을 준수해야 합니다.
+
+[작성 가이드]
+1. 이름, 성별, 나이, 자세한 거주 주소 등 민감한 개인 정보는 포함하지 말 것
+2. 모든 연월은 'YYYY-MM' 형식으로 표기
+3. 학점(gpa)은 소수점 2자리까지 표기
+4. 공고에 명시된 핵심 키워드는 변형 없이 원문 그대로 사용 (예: 'iOS 개발자', '핀테크')
+5. mem_id, reg_year 항목은 반드시 null로 설정
+6. 직무 대분류(job_family) 항목은 반드시 제공된 14개 카테고리 중 제일 적합한 하나를 선택
+7. 실무 성과가 잘 드러나도록 구체적으로 작성
+8. 과장된 표현은 지양하고, 구체적이며 사실적인 어조를 유지
+9. 연차, 졸업 연도, 직무 내용 간 모순이 없도록 유의
+10. 가상 이력서지만 현실적이고 채용 가능성이 높은 인재 프로필 작성
+11. 공고에서 드러나지 않는 최신 트렌드, 관련 경험, 도메인 전문성 포함
+
+1. 기본 정보 (basic_info)
+   - mem_id (string, optional): 회원 ID (없으면 null)
+   - reg_year (int, optional): 이력서 등록 연도 (형식: YYYY, 없으면 null)
+   - total_career_years (int): 총 경력 연차
+   - career_summary (str): 경력 요약 문장
+   - current_job_status (enum): "재직 중", "구직 중 (경력)", "구직 중 (신입)"
+   - hope_salary (str or null): 희망 연봉 (예: "6,000만 원", "협의 가능")
+   - location (str): 시/군/구 (예: "서울특별시 강남구")
+
+2. 기술 역량 (skills)
+   - name (str): 하드 스킬, 소프트 스킬, 또는 도메인 특화 지식
+   - level  (enum): "초급", "중급", "고급","해당 없음" (사용 기술 또는 언어 수준)
+
+3. 경력 (careers)
+   - industry (str): 산업군 (예: "핀테크", "게임", "IT" 등)
+   - department (str): 부서명
+   - job_family (str) : 직무 대분류 (아래 14개 카테고리 중 하나)
+   - job_role (str): 세부 직무명
+   - positions (arrary of str): 직위 리스트 (예: ["사원", "대리"])
+   - description (str): 담당 업무 및 성과 내용
+   - period_year (int or null): 근무 기간(년)
+   - start_year_month (str): 시작 연월 ('YYYY-MM' 형식)
+   - end_year_month (str or null): 종료 연월 ('YYYY-MM' 형식, 재직 중이면 null)
+   - is_current (bool): 현재 재직 여부
+   - is_job_family_changed (bool or null): 직무 대분류 변동 여부
+   
+   직무 대분류(job_family) 카테고리 목록:
+   - 영업/고객상담
+   - 경영/사무
+   - 마케팅/광고/홍보
+   - 생산/제조
+   - 연구개발/설계
+   - IT/인터넷
+   - 서비스
+   - 무역/유통
+   - 의료
+   - 건설
+   - 교육
+   - 디자인
+   - 전문/특수직
+   - 미디어
+   
+4. 경험 (experiences)
+   - experience_type (enum): "교내 활동", "인턴", "동아리", "자원 봉사", "알바", "사회 활동", "해외 연수", "교육 활동"
+   - description (str): 주요 역할, 성과, 배운 점 등
+   - organization (str): 활동 기관/기업/지역
+   - period_month: (int or null): 활동 기간(개월)
+   - start_year_month (str): 시작 연월 ('YYYY-MM' 형식)
+   - end_year_month (str or null): 종료 연월 ('YYYY-MM' 형식, 진행 중이면 null)
+
+5. 학력 (education)
+   - degree (str): 학위 (예: 고등학교 졸업, 학사, 석사, 박사 등)
+   - school_type (str): 학교 유형 (예: 4년제 대학교, 전문대, 대학원 등)
+   - school_area (str): 학교 소재지 (예: 서울특별시, 경기도 등)
+   - major (str): 전공
+   - double_major_minor (str or null): 복수 전공/부전공
+   - gpa (float or null): 학점 (4.5점 만점 기준, 소수점 2자리)
+   - period_year (int or null): 재학 기간(년)
+   - start_year_month (str): 입학 연월 ('YYYY-MM')
+   - end_year_month (str or null): 졸업 연월 ('YYYY-MM')
+   - graduate_status (enum): "졸업", "졸업 예정", "수료", "휴학", "중퇴" 
+
+6. 자격증 (certifications)
+   - name (str): 자격증 이름 (예: "정보처리기사")
+   - issuer (str): 발행 기관
+   - issue_year_month (str): 취득 연월 ('YYYY-MM')
+   - expiration_year_month (str or null): 만료 연월 ('YYYY-MM', 없으면 null)
+
+7. 어학 (languages)
+   - language (str): (예: "영어")
+   - level (str): (예: "Lv.1", "Lv.2", "1급", "2급", "IH", "IM2" 등)
+   - test_name (str or null): 시험 이름 예) "TOEIC"
+   - score (float or null): 시험 점수
+   - test_year_month (str or null): 시험 연월 ('YYYY-MM')
+
+8. 수상 경력 (awards)
+   - title (str): 수상명
+   - award_year_month (str): 수상 연월 ('YYYY-MM')
+   - organization (str): 수여 기관
+   - description (str or null): 주요 성과 및 의의
+
+9. 희망 직무 및 산업군 (hope_job_industry)
+   - hope_jobs (array of str): 희망 직무 (예: ["iOS 개발자", "데이터 분석"])
+   - hope_industries (array of str): 희망 산업군 (예: ["핀테크", "블록체인"])
+
+[출력 예시 (JSON)]
+아래 JSON 형식을 엄격히 준수하고, JSON 바깥에는 어떤 설명이나 추가 텍스트도 절대 넣지 마세요. 코드 블록(```)도 사용하지 마세요.
+{
+  "basic_info": {
+    "mem_id": null,
+    "reg_year": null,
+    "total_career_years": 0,
+    "career_summary": "",
+    "current_job_status": "",
+    "hope_salary": null,
+    "location": ""
+  },
+  "skills": [
+   {
+      "name": "",
+      "level": ""
+   }
+  ],
+  "careers": [
+   {
+      "industry": "",
+      "department": "",
+      "job_family": "",
+      "job_role": "",
+      "positions": [""],
+      "description": "",
+      "period_year": null,
+      "start_year_month": "",
+      "end_year_month": null,
+      "salary": null,
+      "is_current": false,
+      "is_job_family_changed": null
+   }
+  ],
+  "experiences": [
+   {
+      "experience_type": "",
+      "description": "",
+      "organization": "",
+      "period_month": null,
+      "start_year_month": "",
+      "end_year_month": null
+   }
+  ],
+  "education": [
+   {
+      "degree": "",
+      "school_type": "",
+      "school_area": "",
+      "major": "",
+      "double_major_minor": null,
+      "gpa": null,
+      "period_year": null,
+      "start_year_month": "",
+      "end_year_month": null,
+      "graduate_status": ""
+   }
+  ],
+  "certifications": [
+   {
+      "name": "",
+      "issuer": "",
+      "issue_year_month": "",
+      "expiration_year_month": null
+   }
+  ],
+  "languages": [
+   {
+      "language": "",
+      "level": "",
+      "test_name": null,
+      "score": null,
+      "test_year_month": null
+   }
+  ],
+  "awards": [
+   {
+      "title": "",
+      "award_year_month": "",
+      "organization": "",
+      "description": null
+   }
+  ],
+  "hope_job_industry": {
+    "hope_jobs": [""],
+    "hope_industries": [""]
+   }
+}</li>
                 
             </ul>
         </div>
