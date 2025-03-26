@@ -21,6 +21,7 @@ jobs:
       - name: Run index.html generator
         run: |
           python3 generate_index.py
+          touch .nojekyll
 
       - name: Commit and Push changes
         run: |
