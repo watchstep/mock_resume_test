@@ -56,7 +56,9 @@ def generate_index_html():
         modified_time = os.path.getmtime(file_path)
         formatted_time = datetime.fromtimestamp(modified_time).strftime('%Y-%m-%d %H:%M:%S')
 
-        label = f"[JD] {file_name}" if "JD_" in file_name else file_name
+        match = re.search(r'_(\d{6})\.html$', file_name)
+        jd_label = f"[JD: {match.group(1)}]" if match else ""
+        label = f"{jd_label} {file_name}"
         all_links += f'<li><a href="{file_url}" target="_blank">{label}</a> (Last Modified: {formatted_time})</li>\n'
 
     index_html = base_html.replace("<!-- ALL FILES INSERT -->", all_links)
@@ -67,13 +69,14 @@ def generate_index_html():
 def generate_jd_index(jd_number):
     jd_files = []
 
-    jd_pattern = re.compile(r'_JD_' + jd_number + r'\.html$')
+    jd_pattern = re.compile(r'_(\d{6})\.html$')
 
     for file_path in html_files:
         file_name = os.path.basename(file_path)
         file_url = f"{DATA_DIR}/{file_name}"
 
-        if jd_pattern.search(file_name):
+        match = jd_pattern.search(file_name)
+        if match and match.group(1) == jd_number:
             jd_files.append((file_name, file_url))
 
     # 파일명을 날짜 기준으로 정렬
@@ -104,6 +107,7 @@ def generate_jd_index(jd_number):
 <body>
     <h1>Mock Resumes for JD {jd_number}</h1>
     {content}
+     <p><a href="/">Back to Main Page</a></p>
 </body>
 </html>"""
 
