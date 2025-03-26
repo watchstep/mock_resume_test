@@ -107,7 +107,6 @@ def generate_jd_index(jd_number):
 <body>
     <h1>Mock Resumes for JD {jd_number}</h1>
     {content}
-    <p></p> <p><a href="/mock_resume_test/">Back to Main Page</a></p> </body>
 </body>
 </html>"""
 
