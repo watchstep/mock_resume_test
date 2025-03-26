@@ -11,6 +11,9 @@
         table { width: 100%; border-collapse: collapse; }
         table, th, td { border: 1px solid #ccc; }
         th, td { padding: 8px; text-align: left; }
+        button { background-color: #007bff; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+        button:hover { background-color: #0056b3; }
+        pre { background-color: #f8f9fa; padding: 10px; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -93,5 +96,36 @@
         <p><strong>Jobs:</strong> {{ resume.hope_job_industry.hope_jobs | join(", ") }}</p>
         <p><strong>Industries:</strong> {{ resume.hope_job_industry.hope_industries | join(", ") }}</p>
     </div>
+
+    <div class="section">
+        <h2>
+            <button onclick="toggleSection('jd_prompt')">▶ Show JD Query & Prompt</button>
+        </h2>
+        <div id="jd_prompt" style="display: none; margin-top: 20px;">
+            <h3>JD Query</h3>
+            <pre>{{ jd_query }}</pre>
+
+            <h3>Prompt History</h3>
+            <ul>
+                {% for item in prompt %}
+                    <li><strong>{{ item.role }}</strong>: {{ item.content }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+<script>
+function toggleSection(id) {
+    const section = document.getElementById(id);
+    const btn = event.currentTarget;
+    if (section.style.display === "none") {
+        section.style.display = "block";
+        btn.textContent = "▼ Hide JD Query & Prompt";
+    } else {
+        section.style.display = "none";
+        btn.textContent = "▶ Show JD Query & Prompt";
+    }
+}
+</script>
 </body>
 </html>
