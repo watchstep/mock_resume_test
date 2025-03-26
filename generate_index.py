@@ -87,7 +87,7 @@ def generate_jd_index(jd_number):
         model_name = file_name.split("_")[0]
         if model_name not in model_groups:
             model_groups[model_name] = []
-        model_groups[model_name].append(f'<li><a href="/{file_url}" target="_blank">{file_name}</a></li>')
+        model_groups[model_name].append(f'<li><a href="../{file_url}" target="_blank">{file_name}</a></li>')
 
     base_jd_html = """<!DOCTYPE html>
 <html lang="en">
