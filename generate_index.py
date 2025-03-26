@@ -38,7 +38,7 @@ base_html = """<!DOCTYPE html>
     </style>
 </head>
 <body>
-    <h1>Mock Resumes (Latest First)</h1>
+    <h1>Mock Resumes</h1>
     <ul>
         <!-- ALL FILES INSERT -->
     </ul>
