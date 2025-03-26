@@ -117,7 +117,9 @@ def generate_jd_index(jd_number):
 
     jd_html = base_jd_html.format(jd_number=jd_number, content=model_sections)
 
-    with open(f"{jd_number}.html", 'w', encoding='utf-8') as f:
+    output_dir = os.path.join("jd", jd_number)
+
+    with open(os.path.join(output_dir, "index.html"), 'w', encoding='utf-8') as f:
         f.write(jd_html)
 
 # 실행
