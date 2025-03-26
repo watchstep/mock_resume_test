@@ -42,6 +42,14 @@ base_html = """<!DOCTYPE html>
     <ul>
         <!-- ALL FILES INSERT -->
     </ul>
+    <h2>All Resumes</h2>
+    <ul>
+        <!-- ALL FILES INSERT -->
+    </ul>
+    <h2>JDs</h2>
+    <ul>
+        <!-- JD LINKS INSERT -->
+    </ul>
 </body>
 </html>"""
 
@@ -61,7 +69,12 @@ def generate_index_html():
         label = f"{jd_label} {file_name}"
         all_links += f'<li><a href="{file_url}" target="_blank">{label}</a> (Last Modified: {formatted_time})</li>\n'
 
-    index_html = base_html.replace("<!-- ALL FILES INSERT -->", all_links)
+    jd_links = ""
+    for jd in jd_numbers:
+        jd_links += f'<li><a href="jd/{jd}/index.html">JD {jd}</a></li>\n'
+    
+    index_html = base_html.replace("<!-- ALL FILES INSERT -->", all_links).replace("<!-- JD LINKS INSERT -->", jd_links)
+    
 
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         f.write(index_html)
