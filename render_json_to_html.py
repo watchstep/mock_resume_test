@@ -14,12 +14,16 @@ def render_resume_html(output_json_path, template_path):
         env = Environment(loader=FileSystemLoader(str(template_path.parent)))
         template = env.get_template(template_path.name)
         
-        html_content = template.render(resume=output_json['output'])
+        html_content = template.render(
+            resume=output_json['output'],
+            jd_query=output_json.get('jd_query', ''),
+            prompt=output_json.get('prompt', [])
+        )
         
         with open(html_output_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
             
-        print(f"HTML has been successfully generated!")
+        print(f"✅ HTML has been successfully generated: {html_output_path}")
 
 if __name__ == "__main__":
     data_dir = Path("data")
