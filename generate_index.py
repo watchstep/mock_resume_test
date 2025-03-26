@@ -54,7 +54,7 @@ base_html = """<!DOCTYPE html>
 </html>"""
 
 # HTML 파일 생성 함수
-def generate_index_html():
+def generate_index_html(jd_numbers):
     all_links = ""
 
     for file_path in html_files:
@@ -137,14 +137,15 @@ def generate_jd_index(jd_number):
 
 # 실행
 if __name__ == "__main__":
-    generate_index_html()
     jd_numbers = set()
     
     for file in html_files:
         match = re.search(r'_(\d{6})\.html$', os.path.basename(file))
         if match:
             jd_numbers.add(match.group(1))
-    
+
+    generate_index_html(jd_numbers)
+
     for jd in jd_numbers:
         generate_jd_index(jd)
         print(f"JD page for {jd} has been generated!")
